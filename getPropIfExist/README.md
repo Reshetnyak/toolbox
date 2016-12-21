@@ -67,7 +67,7 @@ var serverResponse = {
 var str = getPropIfExist('12_hello - there 00.  first  [0]', serverResponse);
 ```
 
-## What is I need to find property or element if is undefined
+## What if I need to look for undefined property or element?
 
 There is third boolean parameter for this purposes. It's falsy by default.
 To differentiate found `undefined` value there is function property `notFound`.
