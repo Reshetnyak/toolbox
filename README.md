@@ -1,6 +1,6 @@
-* How to safely get nested property?
+# How to safely get nested property?
 
-** Using && operators
+## Using && operators
 
 ```javascript
 var name = response 
@@ -10,7 +10,7 @@ var name = response
 ```
 This checking may grow with nesting levels
 
-** Using try{}catch(){}
+## Using try{}catch(){}
 
 ```javascript
 var name;
@@ -22,7 +22,7 @@ try {
 But this approach will have influence on error handling in your application. 
 If you have global error hanlers or decorators you will have to handle this type of errors also.
 
-** Using getPropIfExist
+## Using getPropIfExist
 
 ```javascript
 var name = getPropIfExist('users[0].name', response);
@@ -67,7 +67,7 @@ var serverResponse = {
 var str = getPropIfExist('12_hello - there 00.  first  [0]', serverResponse);
 ```
 
-** What is I need to find property or element if is undefined
+## What is I need to find property or element if is undefined
 
 There is third boolean parameter for this purposes. It's falsy by default.
 To differentiate found `undefined` value there is function property `notFound`.
