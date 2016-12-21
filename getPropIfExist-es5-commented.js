@@ -3,6 +3,7 @@
  * @author Denis Reshetniak <reshetnjak@gmail.com>
  * @param {string} propString - path to needed property
  * @param {Object | Array[any]} obj - where to look for a property
+ * @param {Boolean} lookForUndefined - provide true if you are looking for undefined property
  * @return undefined | any - found value or undefined
  * 
  * @example #1 - Go through objects and arrays
@@ -39,8 +40,15 @@
  * }
  * // returns 'found'
  * getPropIfExist('12_hello - there 00.  first  [0]', serverResponse);
+ * 
+ * @example #3 Looking for undefined property
+ * var users = [{name: undefined}];
+ * // returns undefined
+ * getPropIfExist('[0].name', users, true)
+ * // returns getPropIfExist.notFound
+ * getPropIfExist('[0].age', users, true)
  */
-function getPropIfExist(propString, obj) {
+function getPropIfExist(propString, obj, lookForUndefined) {
 
     return propString
 
@@ -77,9 +85,12 @@ function getPropIfExist(propString, obj) {
                 
                 // nothing was found
                 } else {
-                    return void 0;
+                    return lookForUndefined ? getPropIfExist.notFound : void 0;
                 }
             },
             obj // Object or Array containing needed property or element
         );
 }
+
+// make unique refference for returning in nothing found case
+getPropIfExist.notFound = {}; 

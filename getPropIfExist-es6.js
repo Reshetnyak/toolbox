@@ -39,8 +39,15 @@
  * }
  * // returns 'found'
  * getPropIfExist('12_hello - there 00.  first  [0]', serverResponse);
+ * 
+ * @example #3 Looking for undefined property
+ * var users = [{name: undefined}];
+ * // returns undefined
+ * getPropIfExist('[0].name', users, true)
+ * // returns getPropIfExist.notFound
+ * getPropIfExist('[0].age', users, true)
  */
-function getPropIfExist(propString, obj) {
+function getPropIfExist(propString, obj, lookForUndefined) {
 
     return propString
         .match(/([\w\s\-]+)|(\[\d+\])/g)
@@ -63,9 +70,11 @@ function getPropIfExist(propString, obj) {
                     return acc[accessor.name];
             
                 } else {
-                    return void 0;
+                    return lookForUndefined ? getPropIfExist.notFound : void 0;
                 }
             },
             obj
         );
 }
+
+getPropIfExist.notFound = Symbol('not foutd');
