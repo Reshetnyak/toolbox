@@ -1,0 +1,28 @@
+{
+  "name": "getprop",
+  "version": "0.0.1",
+  "description": "Utility function which finds nested property in Object or Array",
+  "main": "getProp.ts",
+  "scripts": {
+    "test": "mocha --reporter spec --compilers ts:ts-node/register \"./**/*.spec.ts\"",
+    "test:dev": "mocha --watch --reporter spec --compilers ts:ts-node/register \"./**/*.spec.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Reshetnyak/toolbox.git"
+  },
+  "author": "Denis Reshetniak",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Reshetnyak/toolbox/issues"
+  },
+  "homepage": "https://github.com/Reshetnyak/toolbox#readme",
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.44",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1"
+  }
+}

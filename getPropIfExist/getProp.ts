@@ -2,22 +2,25 @@
  * Finds nested property in Object or Array
  * @author Denis Reshetniak <reshetnjak@gmail.com>
  * @param {Object | Array[any]} obj - where to look for a property
- * @param {string} propString - path to needed property
+ * @param {string} path - path to needed property
  * @return undefined | any - found value or undefined
  */
-function getProp(
-    obj: Object | Array<any>,
-    propString: string
+
+export function getProp(
+    obj: {[key: string]: any} | Array<any>,
+    path: string
 ): any {
-    
-    if (typeof propString !== 'string') {
-        throw new TypeError('propString argument should be a string type');
+    if (typeof path !== 'string') {
+        throw new TypeError('path argument should be a string type');
+    }
+    if (typeof path === 'string' && path.length === 0) {
+        throw new Error('path couldn\'t be an empty string');
     }
     if (!Array.isArray(obj) && !isObject(obj)) {
         throw new TypeError('obj argument should be an object or array');
     }
 
-    return propString
+    return path
         .match(/[\w\s\-]+|\[\d+\]/g)
         .map((accessor: string): number | string => {
             const index: string = (accessor.match(/\[(\d+)\]/) || ['', ''])[1];
@@ -34,7 +37,9 @@ function getProp(
                 }
             } else if (typeof accessor === 'string') {
                 if (isObject(acc)) {
-                    return acc[accessor];
+                    if (acc.hasOwnProperty(accessor)) {
+                        return acc[accessor];
+                    }
                 } else {
                     console.log(acc, ' is not an Object');
                     return void 0;
