@@ -26,26 +26,68 @@ describe('type function', () => {
     });
 
     describe('working with strings', () => {
+        
         const actionType = 'Unique string';
+        let result: string;
+
+        beforeEach(() => {
+            result = type(actionType);
+        });
 
         it('should return provided string if it wasn\'t called with it previously', () => {
-            expect(type(actionType)).to.equal(actionType);
+            expect(result).to.equal(actionType);
         });
+
         it('should throw if called with the same string second time', () => {
-            expect(type(actionType)).to.equal(actionType);
             expect(() => type(actionType)).to.throw(Error);
         });
+
         it('should throw if called with the same string with mixed case second time', () => {
-            expect(type(actionType)).to.equal(actionType);
-            expect(() => type(actionType)).to.throw(Error);
+            expect(() => type('UnIqUe StRiNg')).to.throw(Error);
         });
+
         it('should throw if called with the same string with upper case second time', () => {
-            expect(type(actionType)).to.equal(actionType);
-            expect(() => type(actionType)).to.throw(Error);
+            expect(() => type('UNIQUE STRING')).to.throw(Error);
         });
+
         it('should throw if called with the same string with lower case second time', () => {
-            expect(type(actionType)).to.equal(actionType);
-            expect(() => type(actionType)).to.throw(Error);
+            expect(() => type('unique string')).to.throw(Error);
+        });
+    });
+
+    describe('handling sligtly similar strings', () => {
+        
+        const actionType = 'Unique string';
+        let result: string;
+
+        beforeEach(() => {
+            result = type(actionType);
+        });
+
+        it('should throw if strings differs with spaces', () => {
+            expect(() => type('Unique  string')).to.throw(Error);
+            expect(() => type(' Unique string ')).to.throw(Error);
+            expect(() => type('Un ique str ing')).to.throw(Error);
+        });
+
+        it('should throw if strings differs with underscores', () => {
+            type('String_with_underscore');
+            expect(() => type('String__with_underscore')).to.throw(Error);
+            expect(() => type('String_with__underscore')).to.throw(Error);
+            expect(() => type('String_with_underscore_')).to.throw(Error);
+        });
+
+        it('should throw if "spaced" string differs with underscores', () => {
+            expect(() => type('Unique_string')).to.throw(Error);
+            expect(() => type('Unique__string')).to.throw(Error);
+            expect(() => type('_Unique string_')).to.throw(Error);
+        });
+
+        it('should throw if "underscored" string differs with spaces', () => {
+            type('String_with_underscore');
+            expect(() => type('String with underscore')).to.throw(Error);
+            expect(() => type(' String with underscore ')).to.throw(Error);
+            expect(() => type(' String_with_underscore')).to.throw(Error);
         });
     });
 });

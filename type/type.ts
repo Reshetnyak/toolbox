@@ -8,20 +8,21 @@
 export const type: (type: string) => string = typeFnFactory();
 // for tests
 export function typeFnFactory(): (type: string) => string {
-    const CASHE: {[key: string]: true} = {};
+    const CASHE: {[key: string]: string} = {};
     
     return (type: string): string => {
         // to avoid wrong usage in runtime
         if (typeof type !== 'string') { 
             throw new TypeError('Argument \'type\' should be a string');
         }
-        // to avoid case difference problems ('Load_Book' and 'LOAD_BOOK')
-        const lowercasedType = type.toLowerCase();
+        // to avoid problems with case ('Load_Book' and 'LOAD_BOOK'),
+        // spaces and underscores ('Book load' and 'Book  load')
+        const unifiedType = type.toLowerCase().replace(/\s|_/g, '');
     
-        if (CASHE[lowercasedType]) {
-            throw new Error(`Action type ${type} is already being used in application`);
+        if (CASHE[unifiedType]) {
+            throw new Error(`Trying to register '${type}', but similar type '${CASHE[unifiedType]}' is already being used in application`);
         } else {
-            CASHE[lowercasedType] = true;
+            CASHE[unifiedType] = type;
             return type;
         }
     }

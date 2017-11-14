@@ -3,12 +3,14 @@
  * @author Denis Reshetniak <reshetnjak@gmail.com>
  * @param {Object | Array[any]} obj - where to look for a property
  * @param {string} path - path to needed property
+ * @param {boolean} log - turn on logging
  * @return undefined | any - found value or undefined
  */
 
 export function getProp(
     obj: {[key: string]: any} | Array<any>,
-    path: string
+    path: string,
+    log = false
 ): any {
     if (typeof path !== 'string') {
         throw new TypeError('path argument should be a string type');
@@ -27,21 +29,23 @@ export function getProp(
 
             return index ? parseInt(index, 10) : accessor;
         })
-        .reduce((acc: Object | Array<any>, accessor: number | string): any => {
+        .reduce((acc: {[key: string]: any} | Array<any>, accessor: number | string): any => {
             if (typeof accessor === 'number') {
                 if (Array.isArray(acc)) {
                     return acc[accessor];
                 } else {
-                    console.log(acc, ' is not an Array');
+                    log && console.log(acc, ' is not an Array');
                     return void 0;
                 }
             } else if (typeof accessor === 'string') {
                 if (isObject(acc)) {
                     if (acc.hasOwnProperty(accessor)) {
                         return acc[accessor];
+                    } else {
+                        return void 0;
                     }
                 } else {
-                    console.log(acc, ' is not an Object');
+                    log && console.log(acc, ' is not an Object');
                     return void 0;
                 }
             }
