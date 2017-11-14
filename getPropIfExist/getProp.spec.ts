@@ -81,5 +81,14 @@ describe('getProp function', () => {
     it('should throw if path is an empty string', () => {
       expect( () => getProp.call({}, '') ).to.throw(Error);
     });
+
+    it('should throw if called without path', () => {
+      expect( () => getProp['ca' + 'll']({}) ).to.throw(Error);
+      expect( () => getProp['ca' + 'll']([]) ).to.throw(Error);
+    });
+
+    it('should throw if called without arguments', () => {
+      expect( () => getProp['ca' + 'll']() ).to.throw(Error);
+    });
   });
 });
