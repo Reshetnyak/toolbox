@@ -2,15 +2,15 @@
  * Insure to have unique action types in redux app.
  * @author Denis Reshetniak <reshetnjak@gmail.com>
  * @param {string} type - action type
- * @return string - action type if wasn't registered previosly
+ * @return string - action type if wasn't registered previously
  */
 
-export const type: (type: string) => string = typeFnFactory();
+export const type: <T>(type: T) => T = typeFnFactory();
 // for tests
-export function typeFnFactory(): (type: string) => string {
+export function typeFnFactory(): <T>(type: T) => T {
     const CASHE: {[key: string]: string} = {};
     
-    return (type: string): string => {
+    return <T>(type: T): T => {
         // to avoid wrong usage in runtime
         if (typeof type !== 'string') { 
             throw new TypeError('Argument \'type\' should be a string');
