@@ -5,32 +5,30 @@
  * @return string - action type if wasn't registered previously
  */
 
-export const type: <T>(type: T) => T = typeFnFactory();
+export const type: <T>(actionType: T) => T = typeFnFactory();
 // for tests
-export function typeFnFactory(): <T>(type: T) => T {
+export function typeFnFactory(): <T>(actionType: T) => T {
     const CACHE: {[key: string]: string} = {};
-    
-    return <T>(type: T): T => {
+
+    return <T>(actionType: T): T => {
         // to avoid wrong usage in runtime
-        if (typeof type !== 'string') { 
+        if (typeof actionType !== 'string') {
             throw new TypeError('Argument \'type\' should be a string');
         }
         // to avoid problems with case ('Load_Book' and 'LOAD_BOOK'),
         // spaces and underscores ('Book load' and 'Book  load')
-        const unifiedType = type.toLowerCase().replace(/\s|_/g, '');
-    
+        const unifiedType = actionType.toLowerCase().replace(/\s|_/g, '');
+
         if (CACHE[unifiedType]) {
             const message = [
-                'Trying to register ',
-                type,
-                ', but similar type ',
-                CACHE[unifiedType],
-                ' is already being used in application'
+                `Trying to register '${type}'`,
+                `, but similar type '${CACHE[unifiedType]}'`,
+                'is already being used in application'
             ].join('');
             throw new Error(message);
         } else {
-            CACHE[unifiedType] = type;
-            return type;
+            CACHE[unifiedType] = actionType;
+            return actionType;
         }
-    }
+    };
 }
