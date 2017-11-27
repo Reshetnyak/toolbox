@@ -8,7 +8,7 @@
 export const type: <T>(type: T) => T = typeFnFactory();
 // for tests
 export function typeFnFactory(): <T>(type: T) => T {
-    const CASHE: {[key: string]: string} = {};
+    const CACHE: {[key: string]: string} = {};
     
     return <T>(type: T): T => {
         // to avoid wrong usage in runtime
@@ -19,10 +19,17 @@ export function typeFnFactory(): <T>(type: T) => T {
         // spaces and underscores ('Book load' and 'Book  load')
         const unifiedType = type.toLowerCase().replace(/\s|_/g, '');
     
-        if (CASHE[unifiedType]) {
-            throw new Error(`Trying to register '${type}', but similar type '${CASHE[unifiedType]}' is already being used in application`);
+        if (CACHE[unifiedType]) {
+            const message = [
+                'Trying to register ',
+                type,
+                ', but similar type ',
+                CACHE[unifiedType],
+                ' is already being used in application'
+            ].join('');
+            throw new Error(message);
         } else {
-            CASHE[unifiedType] = type;
+            CACHE[unifiedType] = type;
             return type;
         }
     }
