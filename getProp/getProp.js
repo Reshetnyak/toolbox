@@ -1,4 +1,3 @@
-"use strict";
 /*
  * Finds nested property in Object or Array
  * @author Denis Reshetniak <reshetnjak@gmail.com>
@@ -7,9 +6,7 @@
  * @param {boolean} log - turn on logging
  * @return undefined | any - found value or undefined
  */
-exports.__esModule = true;
-function getProp(obj, path, log) {
-    if (log === void 0) { log = false; }
+export function getProp(obj, path, log = false) {
     if (typeof path !== 'string') {
         throw new TypeError('path argument should be a string type');
     }
@@ -21,11 +18,11 @@ function getProp(obj, path, log) {
     }
     return path
         .match(/[\w\s\-]+|\[\d+\]/g)
-        .map(function (accessor) {
-        var index = (accessor.match(/\[(\d+)\]/) || ['', ''])[1];
+        .map((accessor) => {
+        const index = (accessor.match(/\[(\d+)\]/) || ['', ''])[1];
         return index ? parseInt(index, 10) : accessor;
     })
-        .reduce(function (acc, accessor) {
+        .reduce((acc, accessor) => {
         if (typeof accessor === 'number') {
             if (Array.isArray(acc)) {
                 return acc[accessor];
@@ -51,7 +48,6 @@ function getProp(obj, path, log) {
         }
     }, obj);
 }
-exports.getProp = getProp;
 function isObject(obj) {
     return Object.prototype.toString.call(obj) === '[object Object]';
 }

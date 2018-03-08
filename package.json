@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --reporter spec --compilers ts:ts-node/register \"./**/*.spec.ts\"",
     "test:dev": "mocha --watch --reporter spec --compilers ts:ts-node/register \"./**/*.spec.ts\"",
-    "build:ES5": "tsc getProp/getProp.ts"
+    "build:ES5": "tsc -p tsconfig.es5.json",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
