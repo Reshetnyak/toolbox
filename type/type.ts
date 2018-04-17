@@ -21,7 +21,7 @@ export function typeFnFactory(): <T>(actionType: T) => T {
 
         if (CACHE[unifiedType]) {
             const message = [
-                `Trying to register '${type}'`,
+                `Trying to register '${actionType}'`,
                 `, but similar type '${CACHE[unifiedType]}'`,
                 'is already being used in application'
             ].join('');
