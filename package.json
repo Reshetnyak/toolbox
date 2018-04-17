@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha --reporter spec --compilers ts:ts-node/register \"./**/*.spec.ts\"",
     "test:dev": "mocha --watch --reporter spec --compilers ts:ts-node/register \"./**/*.spec.ts\"",
+    "lint": "tslint -c tslint.json type/type",
     "build:ES5": "tsc getProp/getProp.ts"
   },
   "repository": {
@@ -24,6 +25,7 @@
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
     "ts-node": "^3.3.0",
+    "tslint": "^5.9.1",
     "typescript": "^2.6.1"
   }
 }
